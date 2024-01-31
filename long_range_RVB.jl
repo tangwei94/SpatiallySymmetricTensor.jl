@@ -10,18 +10,19 @@ V = SU2Space(1//2=>1, 0=>1)
 P = SU2Space(1//2=>1)
 T = TensorMap(zeros, ComplexF64, P, V^4)
 
-# a projector to the subspace with (1//2 ⊕ 0 ⊕ 0 ⊕ 0 -> 1//2)
+# a projector to the subspace with (1//2 ⊕ 0 ⊕ 0 ⊕ 0 -> 1//2) (short-range RVB)
 P_nocc_1_3 = begin
     _condition(f1, f2) = length(findall(rep-> rep == SU2Irrep(1//2), f2.uncoupled)) == 1
     selector(T, _condition)
 end
 
-# a projector to the subspace with (1//2 ⊕ 1//2 ⊕ 1//2 ⊕ 0 -> 1//2)
+# a projector to the subspace with (1//2 ⊕ 1//2 ⊕ 1//2 ⊕ 0 -> 1//2) (long-range RVB)
 P_nocc_3_1 = begin
     _condition(f1, f2) = length(findall(rep-> rep == SU2Irrep(1//2), f2.uncoupled)) == 3
     selector(T, _condition)
 end
 
+# matrices for spatial operations
 R_mat = spatial_operation(T, ((1, ), (3, 4, 5, 2)))
 σd_mat = spatial_operation(T, ((1, ), (3, 2, 5, 4)))
 σv_mat = spatial_operation(T, ((1, ), (4, 3, 2, 5)))
@@ -55,13 +56,14 @@ T_3_1_A1 = begin
     T_3_1_A1 = set_data_by_vector(T, sol_3_1)
 end
 
+# get the two symmetric tensors
 T_1_3_A1 = T_1_3_A1 / norm(T_1_3_A1)
 T_3_1_A1 = T_3_1_A1 / norm(T_3_1_A1)
 
 λ = 0.01
 A = T_1_3_A1 + λ * T_3_1_A1
 B = Tensor(zeros, ComplexF64, V*V)
-B.data.values[1] .= [1.0, sqrt(2)] #?
+B.data.values[1] .= [1.0, sqrt(2)] 
 @show eigvals(convert(Array, B))
 
 @tensor TA[-1 -2 -3 -4; -5 -6 -7 -8] := A[1; -5 -6 -7 -8] * conj(A[1; -1 -2 -3 -4]) 
@@ -75,10 +77,10 @@ B.data.values[1] .= [1.0, sqrt(2)] #?
 
 𝕋full = DenseMPO([Tfull])
 ψ1 = ψi 
-for ix in 1:10
+for ix in 1:1000
     ψ1 = changebonds(𝕋full * ψi, SvdCut(truncdim(100)))
     @show ix, domain(ψ1.CR[1])
 end
-ψ2 = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000))
+ψ2 = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)) # VUMPS doesn't converge.
 @save "tmpdata/long_range_RVB.jld2" ψ2
 
