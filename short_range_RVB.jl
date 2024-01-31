@@ -16,12 +16,6 @@ P_nocc_1_3 = begin
     selector(T, _condition)
 end
 
-# a projector to the subspace with (1//2 ⊕ 1//2 ⊕ 1//2 ⊕ 0 -> 1//2) (long-range RVB)
-P_nocc_3_1 = begin
-    _condition(f1, f2) = length(findall(rep-> rep == SU2Irrep(1//2), f2.uncoupled)) == 3
-    selector(T, _condition)
-end
-
 # matrices for spatial operations
 R_mat = spatial_operation(T, ((1, ), (3, 4, 5, 2)))
 σd_mat = spatial_operation(T, ((1, ), (3, 2, 5, 4)))
@@ -41,31 +35,17 @@ T_1_3_A1 = begin
     sol_1_3 = vec(P_nocc_1_3 * Pσv_1_3 * Pσd_1_3 * PR_1_3)
     T_1_3_A1 = set_data_by_vector(T, sol_1_3)
 end
-##### nocc= {3, 1}, TABLE IX.  in PRB 94, 205124 (2016)
-T_3_1_A1 = begin
-    Λσv_3_1, Uσv_3_1 = eigen(Hermitian(P_nocc_3_1' * σv_mat * P_nocc_3_1))
-    Pσv_3_1 = Uσv_3_1[:, Λσv_3_1 .≈ 1]
 
-    Λσd_3_1, Uσd_3_1 = eigen(Hermitian(Pσv_3_1' * P_nocc_3_1' * σd_mat * P_nocc_3_1 * Pσv_3_1))
-    Pσd_3_1 = Uσd_3_1[:, Λσd_3_1 .≈ 1]
+# get the symmetric tensor
+A = T_1_3_A1 / norm(T_1_3_A1)
 
-    ΛR_3_1, UR_3_1 = eigen(Pσd_3_1' * Pσv_3_1' * P_nocc_3_1' * R_mat * P_nocc_3_1 * Pσv_3_1 * Pσd_3_1)
-    PR_3_1 = UR_3_1[:, ΛR_3_1 .≈ 1]
-
-    sol_3_1 = vec(P_nocc_3_1 * Pσv_3_1 * Pσd_3_1 * PR_3_1)
-    T_3_1_A1 = set_data_by_vector(T, sol_3_1)
-end
-
-# get the two symmetric tensors
-T_1_3_A1 = T_1_3_A1 / norm(T_1_3_A1)
-T_3_1_A1 = T_3_1_A1 / norm(T_3_1_A1)
-
-λ = 0.01
-A = T_1_3_A1 + λ * T_3_1_A1
+# the spin singlet living on the bond 0 <- V * V
 B = Tensor(zeros, ComplexF64, V*V)
-B.data.values[1] .= [1.0, sqrt(2)] 
+# two free parameters in B, one stands for trivial bond, one stands for singlet bond 
+B.data.values[1] .= [1.0, 1.0] 
 @show eigvals(convert(Array, B))
 
+# construct the MPO tensor 
 @tensor TA[-1 -2 -3 -4; -5 -6 -7 -8] := A[1; -5 -6 -7 -8] * conj(A[1; -1 -2 -3 -4]) 
 @tensor TB[-1 -2; -3 -4] := B[-1 -2] * conj(B[-3 -4])
 
@@ -81,6 +61,6 @@ for ix in 1:100
     ψ1 = changebonds(𝕋full * ψ1, SvdCut(truncdim(100)))
     @show ix, domain(ψ1.CR[1])
 end
-ψ2 = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)) # VUMPS doesn't converge.
+ψ2 = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)) 
 @save "tmpdata/long_range_RVB.jld2" ψ2
 
