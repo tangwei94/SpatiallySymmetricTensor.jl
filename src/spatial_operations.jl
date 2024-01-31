@@ -24,6 +24,7 @@ function set_data_by_vector(T::AbstractTensorMap, _values; _mapping_table=mappin
     T1 = zero(T) 
     set_data_by_vector!(T1, _values; _mapping_table=_mapping_table)
 end
+
 # convert the free parameters in a tensor to a vector, in the same order as set_data_by_vector
 function Base.vec(T::AbstractTensorMap; _mapping_table=mapping_table(T))
     map(eachindex(_mapping_table)) do ix

@@ -2,6 +2,7 @@
 # https://doi.org/10.1103/PhysRevB.94.205124
 
 using TensorKit, LinearAlgebra, MPSKit
+using JLD2
 using Revise
 using IPEPSC6v
 
@@ -54,41 +55,30 @@ T_3_1_A1 = begin
     T_3_1_A1 = set_data_by_vector(T, sol_3_1)
 end
 
-T_1_3_A1
+T_1_3_A1 = T_1_3_A1 / norm(T_1_3_A1)
+T_3_1_A1 = T_3_1_A1 / norm(T_3_1_A1)
 
-λ = 0.2
+λ = 0.01
 A = T_1_3_A1 + λ * T_3_1_A1
 B = Tensor(zeros, ComplexF64, V*V)
-B.data.values[1] .= 1.0
-@show convert(Array, B)
+B.data.values[1] .= [1.0, sqrt(2)] #?
+@show eigvals(convert(Array, B))
 
 @tensor TA[-1 -2 -3 -4; -5 -6 -7 -8] := A[1; -5 -6 -7 -8] * conj(A[1; -1 -2 -3 -4]) 
 @tensor TB[-1 -2; -3 -4] := B[-1 -2] * conj(B[-3 -4])
 
 δ = isomorphism(fuse(V'*V), V'*V);
-@tensor Tfull[-1 -2; -3 -4] := TA[3 1 9 11; 4 2 10 12] * TB[6 2; 5 1] * TB[8 4; 7 3] * δ[-1; 5 6] * δ[-2; 7 8] * conj(δ[-3; 9 10]) * conj(δ[-4; 11 12]);
-@show space(Tfull)
+δ = permute(δ, (1, 2), (3, ))
+@tensor Tfull[-1 -2; -3 -4] := TA[3 1 9 11; 4 2 10 12] * TB[6 2; 5 1] * TB[8 4; 7 3] * δ[-1 5; 6] * δ[-2 7; 8] * conj(δ[-3 9; 10]) * conj(δ[-4 11; 12]);
 
-𝕋full = DenseMPO([Tfull])
-
-
-
-
-Tfull_plain = TensorMap(convert(Array, Tfull), ℂ^9*ℂ^9, ℂ^9*ℂ^9);
-Tfull_plain_dag = mpotensor_dag(Tfull_plain);
-mpo_ovlp(Tfull_plain, Tfull_plain_dag)[1][1] * mpo_ovlp(Tfull_plain_dag, Tfull_plain)[1][1] / mpo_ovlp(Tfull_plain, Tfull_plain)[1][1] / mpo_ovlp(Tfull_plain_dag, Tfull_plain_dag)[1][1]
-mpo_ovlp(Tfull_plain, Tfull_plain_dag)
-mpo_ovlp(Tfull_plain_dag, Tfull_plain)
-mpo_ovlp(Tfull_plain, Tfull_plain)
-mpo_ovlp(Tfull_plain_dag, Tfull_plain_dag)
 ψi = InfiniteMPS([fuse(V'*V)], [fuse(V'*V)])
 
+𝕋full = DenseMPO([Tfull])
 ψ1 = ψi 
 for ix in 1:10
     ψ1 = changebonds(𝕋full * ψi, SvdCut(truncdim(100)))
     @show ix, domain(ψ1.CR[1])
 end
-
 ψ2 = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000))
+@save "tmpdata/long_range_RVB.jld2" ψ2
 
-mpo_ovlp()
