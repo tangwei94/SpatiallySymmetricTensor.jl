@@ -154,5 +154,5 @@ E1, E2, E3, E4 = real(E1), real(E2), real(E3), real(E4)
 Etot = E1 + E2 + J2*(E3 + E4)
 
 io = open("tmpdata.txt", "a");
-write(io, "$(λ) $(E1) $(E2) $(E3) $(E4) $(Etot)")
+write(io, "$(λ) $(E1) $(E2) $(E3) $(E4) $(Etot)\n")
 close(io)
