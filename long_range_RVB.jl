@@ -85,15 +85,17 @@ IPEPSC6v.mpo_normality(Tfull)
 ψi = InfiniteMPS([fuse(V'*V)], [fuse(V'*V)])
 
 𝕋full = DenseMPO([Tfull]) 
-ψ1 = ψi 
-for ix in 1:20 
-    ψ1 = changebonds(𝕋full * ψ1, SvdCut(truncdim(100))) 
-    @show ix, domain(ψ1.CR[1]) 
-end 
-ψ2, _, _ = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)); 
+let ψ1 = ψi, ψ2 = ψi
+    ψ1 = ψi
+    for ix in 1:20 
+        ψ1 = changebonds(𝕋full * ψ1, SvdCut(truncdim(100))) 
+        @show ix, domain(ψ1.CR[1]) 
+    end 
+    ψ2, _, _ = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)); 
+    @save "data/long_range_RVB_lambda$(λ).jld2" ψ1 ψ2
+end
 
-#@save "data/long_range_RVB_lambda$(λ).jld2" ψ1 ψ2
-#@load "data/long_range_RVB_lambda$(λ).jld2" ψ1 ψ2
+@load "data/long_range_RVB_lambda$(λ).jld2" ψ1 ψ2
 
 # === compute ground state energy
 
