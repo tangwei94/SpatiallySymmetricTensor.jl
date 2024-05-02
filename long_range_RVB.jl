@@ -150,5 +150,9 @@ E4 = E4 / λl^2 / Elr_ovlp
  
 J2 = 0.5
 @show E1, E2, E3, E4
-@show real(E1 + E2 + J2*(E3 + E4))
+E1, E2, E3, E4 = real(E1), real(E2), real(E3), real(E4)
+Etot = E1 + E2 + J2*(E3 + E4)
 
+io = open("tmpdata.txt", "a");
+write(io, "$(λ) $(E1) $(E2) $(E3) $(E4) $(Etot)")
+close(io)
