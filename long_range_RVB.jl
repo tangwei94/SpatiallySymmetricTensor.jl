@@ -92,10 +92,10 @@ let ψ1 = ψi, ψ2 = ψi
         @show ix, domain(ψ1.CR[1]) 
     end 
     ψ2, _, _ = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)); 
-    @save "data/long_range_RVB_lambda$(λ).jld2" ψ1 ψ2
+    @save "data/long_range_RVB_lambda$(λ)_chi100.jld2" ψ1 ψ2
 end
 
-@load "data/long_range_RVB_lambda$(λ).jld2" ψ1 ψ2
+@load "data/long_range_RVB_lambda$(λ)_chi100.jld2" ψ1 ψ2
 
 # === compute ground state energy
 
