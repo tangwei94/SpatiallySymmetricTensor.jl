@@ -13,6 +13,6 @@ export mpo_ovlp, mpotensor_dag
 # Write your package code here.
 include("spatial_operations.jl");
 include("utils.jl");
-
+include("square_lattice_SU2.jl");
 
 end
