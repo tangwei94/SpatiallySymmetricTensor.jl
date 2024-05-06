@@ -35,10 +35,10 @@ let ψ1 = ψi, ψ2 = ψi
 end
 
 @load "data/long_range_RVB_lambda$(λ)_chi200.jld2" ψ1 ψ2
-
 # transfer matrix
 ψA = ψ2.AL[1]
 Etot, E1, E2, E3, E4 = IPEPSC6v.long_range_RVB_energy(Tfull, A, TB, ψA);
+@show Etot, E1, E2, E3, E4
 
 io = open("tmpdata.txt", "a");
 write(io, "$(λ) $(E1) $(E2) $(E3) $(E4) $(Etot)\n")
