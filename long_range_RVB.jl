@@ -88,14 +88,14 @@ IPEPSC6v.mpo_normality(Tfull)
 let ψ1 = ψi, ψ2 = ψi
     ψ1 = ψi
     for ix in 1:20 
-        ψ1 = changebonds(𝕋full * ψ1, SvdCut(truncdim(100))) 
+        ψ1 = changebonds(𝕋full * ψ1, SvdCut(truncdim(200))) 
         @show ix, domain(ψ1.CR[1]) 
     end 
     ψ2, _, _ = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)); 
-    @save "data/long_range_RVB_lambda$(λ)_chi100.jld2" ψ1 ψ2
+    @save "data/long_range_RVB_lambda$(λ)_chi200.jld2" ψ1 ψ2
 end
 
-@load "data/long_range_RVB_lambda$(λ)_chi100.jld2" ψ1 ψ2
+@load "data/long_range_RVB_lambda$(λ)_chi200.jld2" ψ1 ψ2
 
 # === compute ground state energy
 
