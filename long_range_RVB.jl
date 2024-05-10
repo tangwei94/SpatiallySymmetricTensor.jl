@@ -27,21 +27,21 @@ for χ in 100:20:200
     𝕋full = DenseMPO([Tfull, Tfull]) 
     let ψ1 = ψi, ψ2 = ψi
         ψ1 = ψi
-        for ix in 1:25 
+        for ix in 1:100 
             ψ1 = changebonds(𝕋full * ψ1, SvdCut(truncdim(χ))) 
-            @show ix, domain(ψ1.CR[1]) 
+            @show ix, domain(ψ1.CR[1]), domain(ψ1.CR[2]) 
         end 
         ψ2, _, _ = leading_boundary(ψ1, 𝕋full, VUMPS(tol_galerkin=1e-12, maxiter=1000)); 
         @save "data/itebd2_long_range_RVB_lambda$(λ)_chi$(χ).jld2" ψ1 ψ2
     end
 
-    @load "data/itebd2_long_range_RVB_lambda$(λ)_chi$(χ).jld2" ψ1 ψ2
-    # transfer matrix
-    ψA = ψ2.AL[1]
-    Etot, E1, E2, E3, E4 = IPEPSC6v.long_range_RVB_energy(Tfull, A, TB, ψA);
-    @show Etot, E1, E2, E3, E4
+    #@load "data/itebd2_long_range_RVB_lambda$(λ)_chi$(χ).jld2" ψ1 ψ2
+    ## transfer matrix
+    #ψA = ψ2.AL[1]
+    #Etot, E1, E2, E3, E4 = IPEPSC6v.long_range_RVB_energy(Tfull, A, TB, ψA);
+    #@show Etot, E1, E2, E3, E4
 
-    io = open("itebd2_tmpdata.txt", "a");
-    write(io, "$(λ) $(χ) $(E1) $(E2) $(E3) $(E4) $(Etot)\n")
-    close(io)
+    #io = open("itebd2_tmpdata.txt", "a");
+    #write(io, "$(λ) $(χ) $(E1) $(E2) $(E3) $(E4) $(Etot)\n")
+    #close(io)
 end
