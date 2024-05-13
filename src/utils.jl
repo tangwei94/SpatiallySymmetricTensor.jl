@@ -7,7 +7,6 @@ function mpo_ovlp(A1, A2)
         return Tv
     end
 
-    @show V1, V2
     v0 = TensorMap(rand, ComplexF64, V1, V2)
     return eigsolve(mpo_transf, v0, 1, :LM)
 end

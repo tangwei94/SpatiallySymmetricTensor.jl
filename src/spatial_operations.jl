@@ -93,7 +93,6 @@ function spatial_operation(T::AbstractTensorMap, permutations; _mapping_table=ma
         paras[ix] = 1
     
         T1 = set_data_by_vector(T, paras; _mapping_table=_mapping_table)
-        @show T1
 
         RT = permute(T1, permutations...)
         @assert fusiontrees(RT) == fusiontrees(T1)
