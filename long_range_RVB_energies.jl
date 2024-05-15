@@ -11,7 +11,7 @@ T = TensorMap(zeros, ComplexF64, P, V^4)
 χs = 120:20:200
 Etots = map(χs) do χ 
     Tfull, TA, TB, A, B = IPEPSC6v.long_range_RVB(λ)
-    @load "data/long_range_RVB_lambda$(λ)_chi$(χ).jld2" ψ1 ψ2
+    @load "data/itebd1_long_range_RVB_lambda$(λ)_chi$(χ).jld2" ψ1 ψ2
     # transfer matrix
     ψA = ψ2.AL[1]
     Etot, E1, E2, E3, E4 = IPEPSC6v.long_range_RVB_energy(Tfull, A, TB, ψA);
