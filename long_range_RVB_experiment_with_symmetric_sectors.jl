@@ -17,7 +17,7 @@ convert(Array, 2*sqrt(2)*T_1_3_A1)
 convert(Array, sqrt(3)*4*T_3_1_A1)
 
 λs = 0.02:0.02:0.4
-χ = 200
+χ = 300
 for λ in λs
     Tfull, TA, TB = IPEPSC6v.long_range_RVB(λ)
     @show IPEPSC6v.mpo_hermicity(Tfull)

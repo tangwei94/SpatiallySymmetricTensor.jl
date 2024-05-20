@@ -7,7 +7,7 @@ V = SU2Space(1//2=>1, 0=>1)
 P = SU2Space(1//2=>1)
 T = TensorMap(zeros, ComplexF64, P, V^4)
 
-λs = 0.02:0.02:0.26
+λs = 0.02:0.02:0.40
 
 function f_Etots(χ::Int)
     Etots = map(λs) do λ 
@@ -24,6 +24,7 @@ end
 
 Etots_chi100 = f_Etots(100)
 Etots_chi200 = f_Etots(200)
+Etots_chi300 = f_Etots(300)
 
 fig = Figure(backgroundcolor=:white, fontsize=18, size=(600, 600))
 ax1 = Axis(fig[1, 1], 
@@ -32,6 +33,7 @@ ax1 = Axis(fig[1, 1],
         )
 lines!(ax1, λs, Etots_chi100, label="χ=100")
 lines!(ax1, λs, Etots_chi200, label="χ=200")
+lines!(ax1, λs, Etots_chi300, label="χ=300")
 axislegend(ax1, position=:rt)
 @show fig
 
