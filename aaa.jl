@@ -7,13 +7,23 @@ V = SU2Space(1//2=>1, 0=>1);
 P = SU2Space(1//2=>1);
 T = TensorMap(zeros, ComplexF64, P, V^4);
 
-fusiontrees(T)
 for (ix, (f1, f2)) in enumerate(fusiontrees(T)) 
     if ix == 1
-        T[f1, f2][1] = 1
+        #@show T[f1, f2], vec(T[f1, f2])
     end
-    @show ix, T[f1, f2]
+        @show T[f1, f2], vec(T[f1, f2])
 end
 @show T
 
 mapping_table(T::AbstractTensorMap)
+new_mapping_table(T)
+
+vec(T)
+
+v = rand(12)
+set_data_by_vector!(T, v)
+vec(T) == v
+        
+condition(f1, f2) = length(findall(rep-> rep == SU2Irrep(1//2), f2.uncoupled)) == 1
+
+selector(T, condition)
