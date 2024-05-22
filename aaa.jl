@@ -3,34 +3,38 @@ using JLD2, CairoMakie
 using Revise
 using IPEPSC6v
     
-V = SU2Space(1//2=>1, 0=>1)
-P = SU2Space(1//2=>1)
-T = TensorMap(zeros, ComplexF64, P, V^4)
-sols = find_solution(C4v(), T, :A1);
-length(sols)
+T13 = IPEPSC6v.T_1_3_A1() 
+T13
+T13_arr = convert(Array, T13)
 
-V = U1Space(-1//2=>1, -0=>3, 1//2=>1)
-P = U1Space(0=>1, 1=>1)
-T = TensorMap(zeros, ComplexF64, P, V^4)
-num_free_parameters(T)
-sols = find_solution(C4v(), T, :A1);
-length(sols)
+λ13 = 0.5 / T13_arr[1, 2, 1, 1, 1] 
+λ13*T13_arr[1, 2, 1, 1, 1]
+λ13*T13_arr[1, 1, 2, 1, 1]
+λ13*T13_arr[1, 1, 1, 2, 1]
+λ13*T13_arr[1, 1, 1, 1, 2]
+λ13*T13_arr[2, 3, 1, 1, 1]
+λ13*T13_arr[2, 1, 3, 1, 1]
+λ13*T13_arr[2, 1, 1, 3, 1]
+λ13*T13_arr[2, 1, 1, 1, 3]
 
-a = sols[24]
+T31 = IPEPSC6v.T_3_1_A1()
+T31_arr = convert(Array, T31)
 
-# a projector to the subspace with (1//2 ⊕ 0 ⊕ 0 ⊕ 0 -> 1//2) (short-range RVB)
-P_nocc_1_3 = begin
-    _condition(f1, f2) = length(findall(rep-> rep == SU2Irrep(1//2), f2.uncoupled)) == 1
-    selector(T, _condition)
-end
+λ31 = -(1/2/sqrt(6)) / T31_arr[1, 2, 2, 1, 3]
+@show 1/sqrt(6)
+@show 1/2/sqrt(6)
 
-P_trivial = Matrix{ComplexF64}(I, num_paras, num_paras)
+λ31*T31_arr[1, 2, 2, 1, 3]
+λ31*T31_arr[1, 2, 2, 3, 1]
+λ31*T31_arr[1, 2, 1, 2, 3]
+λ31*T31_arr[1, 3, 2, 1, 2]
 
-find_sol(T, P_trivial, C4v_A1_reps)
+λ31*T31_arr[1, 3, 2, 1, 2]
+λ31*T31_arr[1, 3, 2, 1, 2]
+λ31*T31_arr[1, 3, 2, 1, 2]
+λ31*T31_arr[1, 3, 2, 1, 2]
 
-V = SU2Space(1//2=>1, 0=>1)
-P = SU2Space(1//2=>1)
-T = TensorMap(zeros, ComplexF64, P, V^4)
+c = 0.35
+λ13 * T13 + c * λ31 * T31
 
-
-
+c * λ31 / λ13

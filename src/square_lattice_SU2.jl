@@ -65,7 +65,7 @@ function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5)
     @tensor TSl[-1 -2; -3 -4 -5] := δ[-1 2; 1] * δ[-2 4; 3] * conj(δ[-3 5; 6]) * conj(δ[-4 7; 8]) * A[10; 4 2 6 8] * conj(A[9; 3 1 5 7]) * Sleft[9; 10 -5];
     @tensor TSr[-1 -2 -3; -4 -5] := δ[-2 2; 1] * δ[-3 4; 3] * conj(δ[-4 5; 6]) * conj(δ[-5 7; 8]) * A[10; 4 2 6 8] * conj(A[9; 3 1 5 7]) * Sright[-1 9; 10];
     @tensor TSleft[-1 -2; -3 -4 -5] := TSl[-1 -2; 1 2 -5] * TB[1; -3] * TB[2; -4];
-    @tensor TSright[-1 -2; -3 -4 -5] := TSr[-1 -2 -3; 1 2] * TB[1; -4] * TB[2; -5];
+    @tensor TSright[-1 -2 -3; -4 -5] := TSr[-1 -2 -3; 1 2] * TB[1; -4] * TB[2; -5];
 
     function transfer_R(v)
         @tensor Tv[-1 -2 -3; -4] := ψA[-3 2; 1] * Tfull[-2 4; 2 3] * Tfull[-1 7; 4 5] * conj(ψA[-4 7; 6]) * v[5 3 1; 6]
