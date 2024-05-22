@@ -35,10 +35,10 @@ function long_range_RVB(λ::Float64)
     V = SU2Space(1//2=>1, 0=>1)
     P = SU2Space(1//2=>1)
 
-    T_1_3_A1 = IPEPSC6v.T_1_3_A1()
-    T_3_1_A1 = IPEPSC6v.T_3_1_A1()
+    T_1_3 = T_1_3_A1()
+    T_3_1 = T_3_1_A1()
 
-    A = T_1_3_A1 + λ * T_3_1_A1;
+    A = T_1_3 + λ * T_3_1;
     B = Tensor(zeros, ComplexF64, V*V);
     B.data.values[1] .= [1.0, sqrt(2)] ;
 
