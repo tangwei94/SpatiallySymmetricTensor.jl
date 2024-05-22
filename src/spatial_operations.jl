@@ -23,7 +23,7 @@ end
     - return the number of free parameters in a symmetric tensor
 """
 function num_free_parameters(T::AbstractTensorMap; _mapping_table::MappingTable=mapping_table(T))
-    return sum([n for (_, _, _, n) in _mapping_table(T)])
+    return sum([n for (_, _, _, n) in _mapping_table])
 end
 
 """
@@ -76,7 +76,7 @@ returreturn
     - `_condition` is a function that takes two arguments `f1` and `f2`, which are the `FusionTrees` of `T`. The function return boolean values. For the explanation of `TensorKit.FusionTrees`, see https://jutho.github.io/TensorKit.jl/latest/man/sectors/.  
 """
 function selector(T::AbstractTensorMap, condition::Function; _mapping_table::MappingTable=mapping_table(T))
-    num_paras = sum([n for (_, _, _, n) in _mapping_table])
+    num_paras = num_free_parameters(T; _mapping_table=_mapping_table)
     P = zeros(ComplexF64, num_paras, num_paras)
     Pd = view(P, diagind(P))
 
@@ -96,7 +96,7 @@ end
 
 """
 function spatial_operation(T::AbstractTensorMap, permutations; _mapping_table::MappingTable=mapping_table(T))
-    num_paras = sum([n for (_, _, _, n) in _mapping_table])
+    num_paras = num_free_parameters(T; _mapping_table=_mapping_table)
     M = zeros(ComplexF64, num_paras, num_paras)
     for ix in 1:num_paras
         paras = zeros(ComplexF64, num_paras)
