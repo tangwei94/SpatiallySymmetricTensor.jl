@@ -35,7 +35,7 @@ end
 function set_data_by_vector!(T::AbstractTensorMap, values::Vector{<:Number}; _mapping_table::MappingTable=mapping_table(T))
     for ix in eachindex(_mapping_table)
         f1, f2, a, n = _mapping_table[ix]
-        T[f1, f2] .= values[a:a+n-1]
+        reshape(T[f1, f2], n) .= values[a:a+n-1]
     end
     return T
 end
