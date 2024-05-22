@@ -39,5 +39,11 @@ function find_solution(spg::AbstractPointGroup, T::AbstractTensorMap, reps_name:
 
     # solution 
     num_solutions = size(P_sol, 2)
-    return [set_data_by_vector(T, vec(P_sol[:, ix]); _mapping_table=mt) for ix in 1:num_solutions]
+    sols = [set_data_by_vector(T, vec(P_sol[:, ix]); _mapping_table=mt) for ix in 1:num_solutions]
+
+    for sol in sols, perm in [get_perm(spg, :σd); get_perm(spg, :σv); get_perm(spg, :R)] 
+        @show norm(sol - permute(sol, perm))
+    end
+
+    return [sol / norm(sol) for sol in sols]
 end

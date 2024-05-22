@@ -16,14 +16,7 @@ num_free_parameters(T)
 sols = find_solution(C4v(), T, :A1);
 length(sols)
 
-a = convert(Array, sols[1])
-a - permutedims(a, (1, 4, 3, 2, 5)) |> norm
-a - permutedims(a, (1, 2, 4, 3, 5)) |> norm
-a - permutedims(a, (1, 5, 3, 4, 2)) |> norm
-a - permutedims(a, (1, 3, 2, 5, 4)) |> norm
-a - permutedims(a, (1, 3, 4, 5, 2)) |> norm
-
-
+a = sols[24]
 
 # a projector to the subspace with (1//2 ⊕ 0 ⊕ 0 ⊕ 0 -> 1//2) (short-range RVB)
 P_nocc_1_3 = begin
