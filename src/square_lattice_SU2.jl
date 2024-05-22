@@ -10,27 +10,7 @@ function T_1_3_A1()
         selector(T, _condition)
     end
 
-    # matrices for spatial operations
-    R_mat = spatial_operation(T, ((1, ), (3, 4, 5, 2)))
-    σd_mat = spatial_operation(T, ((1, ), (3, 2, 5, 4)))
-    σv_mat = spatial_operation(T, ((1, ), (4, 3, 2, 5)))
-
-    T_1_3_A1 = begin
-        Λσv_1_3, Uσv_1_3 = eigen(Hermitian(P_nocc_1_3' * σv_mat * P_nocc_1_3))
-        Pσv_1_3 = Uσv_1_3[:, Λσv_1_3 .≈ 1]
-
-        Λσd_1_3, Uσd_1_3 = eigen(Hermitian(Pσv_1_3' * P_nocc_1_3' * σd_mat * P_nocc_1_3 * Pσv_1_3))
-        Pσd_1_3 = Uσd_1_3[:, Λσd_1_3 .≈ 1]
-
-        ΛR_1_3, UR_1_3 = eigen(Pσd_1_3' * Pσv_1_3' * P_nocc_1_3' * R_mat * P_nocc_1_3 * Pσv_1_3 * Pσd_1_3)
-        PR_1_3 = UR_1_3[:, ΛR_1_3 .≈ 1]
-
-        sol_1_3 = vec(P_nocc_1_3 * Pσv_1_3 * Pσd_1_3 * PR_1_3)
-        T_1_3_A1 = set_data_by_vector(T, sol_1_3)
-    end
-
-    T_1_3_A1 = T_1_3_A1 / norm(T_1_3_A1)
-
+    T_1_3_A1 = find_solution(C4v(), T, :A1; P_filter=P_nocc_1_3)[1]
     return T_1_3_A1
 end
 
@@ -46,28 +26,7 @@ function T_3_1_A1()
         selector(T, _condition)
     end
 
-    # matrices for spatial operations
-    R_mat = spatial_operation(T, ((1, ), (3, 4, 5, 2)))
-    σd_mat = spatial_operation(T, ((1, ), (3, 2, 5, 4)))
-    σv_mat = spatial_operation(T, ((1, ), (4, 3, 2, 5)))
-
-    ##### nocc= {3, 1}, TABLE IX.  in PRB 94, 205124 (2016)
-    T_3_1_A1 = begin
-        Λσv_3_1, Uσv_3_1 = eigen(Hermitian(P_nocc_3_1' * σv_mat * P_nocc_3_1))
-        Pσv_3_1 = Uσv_3_1[:, Λσv_3_1 .≈ 1]
-
-        Λσd_3_1, Uσd_3_1 = eigen(Hermitian(Pσv_3_1' * P_nocc_3_1' * σd_mat * P_nocc_3_1 * Pσv_3_1))
-        Pσd_3_1 = Uσd_3_1[:, Λσd_3_1 .≈ 1]
-
-        ΛR_3_1, UR_3_1 = eigen(Pσd_3_1' * Pσv_3_1' * P_nocc_3_1' * R_mat * P_nocc_3_1 * Pσv_3_1 * Pσd_3_1)
-        PR_3_1 = UR_3_1[:, ΛR_3_1 .≈ 1]
-
-        sol_3_1 = vec(P_nocc_3_1 * Pσv_3_1 * Pσd_3_1 * PR_3_1)
-        T_3_1_A1 = set_data_by_vector(T, sol_3_1)
-    end
-
-    T_3_1_A1 = T_3_1_A1 / norm(T_3_1_A1)
-
+    T_3_1_A1 = find_solution(C4v(), T, :A1; P_filter=P_nocc_3_1)[1]
     return T_3_1_A1
 end
 
