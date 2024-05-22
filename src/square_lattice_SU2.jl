@@ -40,7 +40,8 @@ function long_range_RVB(λ::Float64)
 
     A = T_1_3 + λ * T_3_1;
     B = Tensor(zeros, ComplexF64, V*V);
-    B.data.values[1] .= [1.0, sqrt(2)] ;
+    #B.data.values[1] .= [1.0, sqrt(2)] ;
+    B.data.values[1] .= [1.0, 1.0] ;
 
     δ = isomorphism(fuse(V'*V), V'*V);
     δ = permute(δ, (1, 2), (3, ));
