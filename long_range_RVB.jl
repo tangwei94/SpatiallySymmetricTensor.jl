@@ -16,7 +16,9 @@ for χ in 36:36:144
     @show IPEPSC6v.mpo_hermicity(Tfull)
     @show IPEPSC6v.mpo_normality(Tfull)
 
-    ψi = InfiniteMPS([fuse(V'*V)], [SU2Space(0=>1)])
+    ψ2 = InfiniteMPS([fuse(V'*V)], [SU2Space(0=>1)])
+    (χ-36 > 0) && @load "data/long_range_RVB_lambda$(λ)_chi$(χ).jld2" ψ2
+    ψi = ψ2
     Tfull, TA, TB, A, B = IPEPSC6v.long_range_RVB(λ)
     𝕋full = DenseMPO([Tfull]) 
     let ψ1 = ψi, ψ2 = ψi

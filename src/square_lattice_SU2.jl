@@ -14,6 +14,17 @@ function T_1_3_A1()
     return T_1_3_A1
 end
 
+function T_1_3_A1_from_plain()
+    A = zeros(2, 3, 3, 3, 3)
+    A[1, 2, 1, 1, 1] = A[1, 1, 2, 1, 1] = A[1, 1, 1, 2, 1] = A[1, 1, 1, 1, 2] = 1/2
+    A[2, 3, 1, 1, 1] = A[2, 1, 3, 1, 1] = A[2, 1, 1, 3, 1] = A[2, 1, 1, 1, 3] = 1/2
+
+    V = SU2Space(0=>1, 1//2=>1) # 1 corresponds to 0=>1, 2~3 corresponds to 1//2=>1
+    P = SU2Space(1//2=>1)
+    T = TensorMap(A, P, V^4) 
+    return T
+end
+
 function T_3_1_A1()
 
     V = SU2Space(1//2=>1, 0=>1)
@@ -30,6 +41,20 @@ function T_3_1_A1()
     return T_3_1_A1
 end
 
+function T_3_1_A1_from_plain()
+    A = zeros(2, 3, 3, 3, 3)
+    A[1, 2, 2, 3, 1] = A[1, 2, 2, 1, 3] = A[1, 2, 3, 1, 2] = A[1, 2, 1, 3, 2] = A[1, 3, 2, 2, 1] = A[1, 3, 1, 2, 2] = A[1, 1, 2, 2, 3] = A[1, 1, 3, 2, 2] = -1/2/sqrt(6)
+    A[1, 2, 3, 2, 1] = A[1, 2, 1, 2, 3] = A[1, 3, 2, 1, 2] = A[1, 1, 2, 3, 2] = 1/sqrt(6)
+
+    A[2, 2, 3, 3, 1] = A[2, 2, 1, 3, 3] = A[2, 3, 2, 1, 3] = A[2, 3, 3, 2, 1] = A[2, 3, 3, 1, 2] = A[2, 3, 1, 2, 3]=  A[2, 1, 2, 3, 3] = A[2, 1, 3, 3, 2] = 1/2/sqrt(6)
+    A[2, 2, 3, 1, 3] = A[2, 3, 2, 3, 1] = A[2, 3, 1, 3, 2] = A[2, 1, 3, 2, 3] = -1/sqrt(6)
+
+    V = SU2Space(0=>1, 1//2=>1) # 1 corresponds to 0=>1, 2~3 corresponds to 1//2=>1
+    P = SU2Space(1//2=>1)
+    T = TensorMap(A, P, V^4) 
+    return T
+end
+
 function long_range_RVB(λ::Float64)
 
     V = SU2Space(1//2=>1, 0=>1)
@@ -40,8 +65,7 @@ function long_range_RVB(λ::Float64)
 
     A = T_1_3 + λ * T_3_1;
     B = Tensor(zeros, ComplexF64, V*V);
-    #B.data.values[1] .= [1.0, sqrt(2)] ;
-    B.data.values[1] .= [1.0, 1.0] ;
+    B.data.values[1] .= [1.0, sqrt(2)] ;
 
     δ = isomorphism(fuse(V'*V), V'*V);
     δ = permute(δ, (1, 2), (3, ));
