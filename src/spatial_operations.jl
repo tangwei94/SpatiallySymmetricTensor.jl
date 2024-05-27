@@ -60,6 +60,7 @@ end
     - map the symmetric tensor to a vector that lives the linear space of the free parameters
 """
 function Base.vec(T::AbstractTensorMap; _mapping_table::MappingTable=mapping_table(T))
+    # FIXME. should return a vector instead of a view
     v = map(eachindex(_mapping_table)) do ix
         f1, f2, _, _ = _mapping_table[ix]
         return vec(T[f1, f2])
