@@ -6,24 +6,10 @@ using JLD2
 using Revise
 using IPEPSC6v
 
-V = SU2Space(1//2=>1, 0=>1)
-P = SU2Space(1//2=>1)
-T = TensorMap(zeros, ComplexF64, P, V^4)
-
 λ = 0.35#parse(Float64, ARGS[1])
-Tfull, TA, TB, A, B = IPEPSC6v.long_range_RVB(λ)
-Tfull_arr = convert(Array, Tfull);
-Tfull_plain = TensorMap(Tfull_arr, ℂ^9*ℂ^9, ℂ^9*ℂ^9); 
-TA_arr = convert(Array, TA);
-TA_plain = TensorMap(TA_arr, ℂ^9*ℂ^9, ℂ^9*ℂ^9); 
-TB_arr = convert(Array, TB);
-TB_plain = TensorMap(TB_arr, ℂ^9, ℂ^9);
-A_arr = convert(Array, A);
-A_plain = TensorMap(A_arr, ℂ^2, (ℂ^3)^4);
-B_arr = convert(Array, B);
-B_plain = TensorMap(B_arr, ℂ^3, ℂ^3);
+Tfull, TA, TB, A, B = IPEPSC6v.long_range_RVB(λ; use_symmetric_tensor=false)
 
-let Tfull = Tfull_plain, A = A_plain, TB = TB_plain  
+let Tfull = Tfull, A = A, TB = TB  
     for χ in 36:36:144
         ψ2 = InfiniteMPS([ℂ^9], [ℂ^χ])
         𝕋full = DenseMPO([Tfull]) 

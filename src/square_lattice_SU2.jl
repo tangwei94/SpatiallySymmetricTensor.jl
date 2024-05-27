@@ -55,17 +55,24 @@ function T_3_1_A1_from_plain()
     return T
 end
 
-function long_range_RVB(λ::Float64)
+function long_range_RVB(λ::Float64; use_symmetric_tensor=true)
 
-    V = SU2Space(1//2=>1, 0=>1)
-    P = SU2Space(1//2=>1)
-
-    T_1_3 = T_1_3_A1()
-    T_3_1 = T_3_1_A1()
-
-    A = T_1_3 + λ * T_3_1;
-    B = Tensor(zeros, ComplexF64, V*V);
-    B.data.values[1] .= [1.0, sqrt(2)] ;
+    if use_symmetric_tensor
+        V = SU2Space(1//2=>1, 0=>1)
+        P = SU2Space(1//2=>1)
+        T_1_3 = T_1_3_A1()
+        T_3_1 = T_3_1_A1()
+        A = T_1_3 + λ * T_3_1;
+        B = Tensor(zeros, ComplexF64, V*V);
+        B.data.values[1] .= [1.0, sqrt(2)];
+    else
+        V, P = ℂ^3, ℂ^2
+        T_1_3 = TensorMap(convert(Array, T_1_3_A1()), P, V^4)
+        T_3_1 = TensorMap(convert(Array, T_3_1_A1()), P, V^4)
+        A = T_1_3 + λ * T_3_1;
+        B = Tensor(zeros, ComplexF64, V*V);
+        B[1, 1] = B[2, 3] = B[3, 2] = 1
+    end
 
     δ = isomorphism(fuse(V'*V), V'*V);
     δ = permute(δ, (1, 2), (3, ));
@@ -77,7 +84,7 @@ function long_range_RVB(λ::Float64)
     return Tfull, TA, TB, A, B
 end
 
-function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5, use_symmetric_tensor=false)
+function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5, use_symmetric_tensor=true)
 
     V = use_symmetric_tensor ? SU2Space(1//2=>1, 0=>1) : ℂ^3
     P = use_symmetric_tensor ? SU2Space(1//2=>1) : ℂ^2
