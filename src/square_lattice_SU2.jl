@@ -77,12 +77,12 @@ function long_range_RVB(λ::Float64)
     return Tfull, TA, TB, A, B
 end
 
-function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5)
+function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5, use_symmetric_tensor=false)
 
-    V = SU2Space(1//2=>1, 0=>1)
-    P = SU2Space(1//2=>1)
-
-    Sleft, Sright = spin_exchange()
+    V = use_symmetric_tensor ? SU2Space(1//2=>1, 0=>1) : ℂ^3
+    P = use_symmetric_tensor ? SU2Space(1//2=>1) : ℂ^2
+    Sleft, Sright = use_symmetric_tensor ? spin_exchange() : spin_exchange_plain()
+    
     δ = isomorphism(fuse(V'*V), V'*V);
     δ = permute(δ, (1, 2), (3, ));
 
@@ -142,6 +142,20 @@ function spin_exchange()
     VA = SU2Space(1 => 1)
     Sleft = TensorMap(ones, ComplexF64, P, P*VA) * sqrt(3/4)
     Sright = -TensorMap(ones, ComplexF64, VA*P, P) * sqrt(3/4)
+
+    return Sleft, Sright
+end
+
+function spin_exchange_plain()
+    Sx = ComplexF64[0 0.5; 0.5 0]
+    Sy = ComplexF64[0 -0.5im; 0.5im 0]
+    Sz = ComplexF64[0.5 0; 0 -0.5]
+    P = ℂ^2
+    SdotS = TensorMap(kron(Sx, Sx) + kron(Sy, Sy) + kron(Sz, Sz), P*P, P*P)
+
+    L, Λ, R = tsvd(SdotS, (1, 3), (2, 4))
+    Sleft = permute(L * sqrt(Λ), ((1, ), (2, 3)))
+    Sright = permute(sqrt(Λ) * R, ((1, 2), (3, )))
 
     return Sleft, Sright
 end
