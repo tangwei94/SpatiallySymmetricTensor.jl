@@ -71,7 +71,8 @@ function long_range_RVB(λ::Float64; use_symmetric_tensor=true)
         T_3_1 = TensorMap(convert(Array, T_3_1_A1()), P, V^4)
         A = T_1_3 + λ * T_3_1;
         B = Tensor(zeros, ComplexF64, V*V);
-        B[1, 1] = B[2, 3] = B[3, 2] = 1
+        B[1, 1] = B[2, 3] = 1
+        B[3, 2] = -1
     end
 
     δ = isomorphism(fuse(V'*V), V'*V);

@@ -6,11 +6,11 @@ using JLD2
 using Revise
 using IPEPSC6v
 
-λ = -0.35#parse(Float64, ARGS[1])
+λ = 0.35#parse(Float64, ARGS[1])
 Tfull_plain, TA_plain, TB_plain, A_plain, B_plain = IPEPSC6v.long_range_RVB(λ; use_symmetric_tensor=false)
 
 let Tfull = Tfull_plain, A = A_plain, TB = TB_plain
-    for χ in 36:36:36
+    for χ in 36:36:144
         ψ2 = InfiniteMPS([ℂ^9], [ℂ^χ])
         𝕋full = DenseMPO([Tfull]) 
         if χ > 36
@@ -33,10 +33,10 @@ let Tfull = Tfull_plain, A = A_plain, TB = TB_plain
     end
 end
 
-Tfull, TA, TB, A, B = IPEPSC6v.long_range_RVB(λ; use_symmetric_tensor=true)
-let Tfull = Tfull, A = A, TB = TB  
-    @load "data/long_range_RVB_lambda$(λ)_chi$(36).jld2" ψ2
-    ψA = ψ2.AL[1]
-    Etot, E1, E2, E3, E4 = IPEPSC6v.long_range_RVB_energy(Tfull, A, TB, ψA; use_symmetric_tensor=true);
-    @show Etot, E1, E2, E3, E4
-end
+#Tfull, TA, TB, A, B = IPEPSC6v.long_range_RVB(λ; use_symmetric_tensor=true);
+#let Tfull = Tfull, A = A, TB = TB  
+#    @load "data/long_range_RVB_lambda$(λ)_chi$(36).jld2" ψ2
+#    ψA = ψ2.AL[1]
+#    Etot, E1, E2, E3, E4 = IPEPSC6v.long_range_RVB_energy(Tfull, A, TB, ψA; use_symmetric_tensor=true);
+#    @show Etot, E1, E2, E3, E4
+#end
