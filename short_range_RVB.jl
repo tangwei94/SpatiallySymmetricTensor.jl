@@ -4,7 +4,7 @@
 using TensorKit, LinearAlgebra, MPSKit
 using JLD2
 using Revise
-using IPEPSC6v
+using SpatiallySymmetricTensor
 
 V = SU2Space(1//2=>1, 0=>1)
 P = SU2Space(1//2=>1)

@@ -1,4 +1,4 @@
-name = "IPEPSC6v"
+name = "SpatiallySymmetricTensor"
 uuid = "267f34df-16a8-4a72-a26d-fb880b511394"
 authors = ["Wei Tang <tangwei@smail.nju.edu.cn> and contributors"]
 version = "1.0.0-DEV"

@@ -1,16 +1,16 @@
-using IPEPSC6v
+using SpatiallySymmetricTensor
 using Documenter
 
-DocMeta.setdocmeta!(IPEPSC6v, :DocTestSetup, :(using IPEPSC6v); recursive=true)
+DocMeta.setdocmeta!(SpatiallySymmetricTensor, :DocTestSetup, :(using SpatiallySymmetricTensor); recursive=true)
 
 makedocs(;
-    modules=[IPEPSC6v],
+    modules=[SpatiallySymmetricTensor],
     authors="Wei Tang <tangwei@smail.nju.edu.cn> and contributors",
-    repo="https://github.com/tangwei94/IPEPSC6v.jl/blob/{commit}{path}#{line}",
-    sitename="IPEPSC6v.jl",
+    repo="https://github.com/tangwei94/SpatiallySymmetricTensor.jl/blob/{commit}{path}#{line}",
+    sitename="SpatiallySymmetricTensor.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://tangwei94.github.io/IPEPSC6v.jl",
+        canonical="https://tangwei94.github.io/SpatiallySymmetricTensor.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -20,6 +20,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/tangwei94/IPEPSC6v.jl",
+    repo="github.com/tangwei94/SpatiallySymmetricTensor.jl",
     devbranch="main",
 )

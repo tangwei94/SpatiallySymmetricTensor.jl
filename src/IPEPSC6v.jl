@@ -1,4 +1,4 @@
-module IPEPSC6v
+module SpatiallySymmetricTensor
 
 __precompile__(true)
 

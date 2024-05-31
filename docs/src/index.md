@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = IPEPSC6v
+CurrentModule = SpatiallySymmetricTensor
 ```
 
-# IPEPSC6v
+# SpatiallySymmetricTensor
 
-Documentation for [IPEPSC6v](https://github.com/tangwei94/IPEPSC6v.jl).
+Documentation for [SpatiallySymmetricTensor](https://github.com/tangwei94/SpatiallySymmetricTensor.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [IPEPSC6v]
+Modules = [SpatiallySymmetricTensor]
 ```
