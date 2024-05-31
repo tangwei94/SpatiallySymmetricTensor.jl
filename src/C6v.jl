@@ -9,7 +9,7 @@ const C6v_σv1 = ((1, ), (6, 5, 4, 3, 2, 7))
 const C6v_σv2 = ((1, ), (2, 7, 6, 5, 4, 3))
 const C6v_σv3 = ((1, ), (4, 3, 2, 7, 6, 5))
 
-# in the order of σd, σv, R, see http://symmetry.jacobs-university.de/cgi-bin/group.cgi?group=406&option=4
+# in the order of σd, σv, R; see http://symmetry.jacobs-university.de/cgi-bin/group.cgi?group=406&option=4
 const C6v_A1_reps = (1, 1, 1) 
 const C6v_A2_reps = (-1, -1, 1) 
 const C6v_B1_reps = (-1, 1, -1) 

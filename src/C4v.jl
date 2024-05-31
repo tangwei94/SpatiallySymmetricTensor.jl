@@ -7,7 +7,7 @@ const C4v_σv2 = ((1, ), (2, 5, 4, 3))
 const C4v_R1 = ((1, ), (3, 4, 5, 2))
 const C4v_R2 = ((1, ), (5, 2, 3, 4))
 
-# in the order of σd, σv, R, see http://symmetry.jacobs-university.de/cgi-bin/group.cgi?group=404&option=4
+# in the order of σd, σv, R; see http://symmetry.jacobs-university.de/cgi-bin/group.cgi?group=404&option=4
 const C4v_A1_reps = (1, 1, 1) 
 const C4v_A2_reps = (-1, -1, 1) 
 const C4v_B1_reps = (-1, 1, 1) 
