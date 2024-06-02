@@ -109,8 +109,8 @@ function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5, use_symmetric_tensor=t
         return Tv
     end
 
-    Vψ = MPSKit._firstspace(ψA)
-    VT = MPSKit._firstspace(Tfull)
+    Vψ = space(ψA, 1)
+    VT = space(Tfull, 1)
 
     vr0 = TensorMap(rand, ComplexF64, VT*VT*Vψ, Vψ)
     vl0 = TensorMap(rand, ComplexF64, Vψ, VT*VT*Vψ)

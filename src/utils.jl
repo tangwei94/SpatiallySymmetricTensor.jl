@@ -1,6 +1,8 @@
+const MPOTensor{S} = AbstractTensorMap{S,2,2} where {S}
+
 function mpo_ovlp(A1, A2)
-    V1 = MPSKit._firstspace(A1)
-    V2 = MPSKit._firstspace(A2)
+    V1 = space(A1, 1)
+    V2 = space(A2, 1)
 
     function mpo_transf(v)
         @tensor Tv[-1; -2] := A1[-1 3; 4 1] * conj(A2[-2 3; 4 2]) * v[1; 2]
@@ -11,7 +13,7 @@ function mpo_ovlp(A1, A2)
     return eigsolve(mpo_transf, v0, 1, :LM)
 end
 
-function mpotensor_dag(T::MPSKit.MPOTensor)
+function mpotensor_dag(T::MPOTensor)
     T_data = reshape(T.data, (dims(codomain(T))..., dims(domain(T))...))
     Tdag_data = permutedims(conj.(T_data), (1, 3, 2, 4))
     
@@ -19,7 +21,7 @@ function mpotensor_dag(T::MPSKit.MPOTensor)
 end
 
 function mpo_hermicity(A)
-    v_space = MPSKit._firstspace(A)
+    v_space = space(A, 1)
     function AA_transf(v)
         @tensor Tv[-1; -2] := A[-1 3; 4 1] * conj(A[-2 3; 4 2]) * v[1; 2]
         return Tv
@@ -42,7 +44,7 @@ function mpo_hermicity(A)
 end
 
 function mpo_normality(A)
-    v_space = MPSKit._firstspace(A)
+    v_space = space(A, 1)
 
     function ĀAĀA_transf(v)
         @tensor Tv[-1 -2; -3 -4] := conj(A[-3 7; 8 6]) * A[-1 7; 5 4] * conj(A[-4 3; 5 2]) * A[-2 3; 8 1] * v[1 4; 2 6]

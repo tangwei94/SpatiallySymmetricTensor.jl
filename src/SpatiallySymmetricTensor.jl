@@ -4,7 +4,6 @@ __precompile__(true)
 
 using LinearAlgebra
 using TensorKit
-using MPSKit
 using KrylovKit
 
 export mapping_table, num_free_parameters, set_data_by_vector!, set_data_by_vector, selector, spatial_operation
