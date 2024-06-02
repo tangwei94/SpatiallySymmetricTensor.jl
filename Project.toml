@@ -16,6 +16,8 @@ TensorOperations = "6aa20fa7-93e2-5fca-9bc0-fbd0db3c71a2"
 
 [compat]
 TensorKit = "0.12"
+Combinatorics = "1"
+KrylovKit = "0.7"
 julia = "1"
 
 [extras]
