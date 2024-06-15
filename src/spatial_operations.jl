@@ -1,4 +1,4 @@
-const MappingEntry = Tuple{FusionTree, FusionTree, Int, Int}
+const MappingEntry = Tuple{Union{FusionTree,Nothing}, Union{FusionTree,Nothing}, Int, Int}
 const MappingTable = Vector{MappingEntry}
 
 """
