@@ -19,7 +19,7 @@ Combinatorics = "1"
 JLD2 = "0.4, 0.5"
 KrylovKit = "0.6 - 0.8"
 Revise = "3"
-TensorKit = "0.12"
+TensorKit = "0.12, 0.13"
 TensorOperations = "4, 5"
 julia = "1"
 
