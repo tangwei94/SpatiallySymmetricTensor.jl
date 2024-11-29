@@ -2,7 +2,7 @@
     # TODO. more test cases
     V = SU2Space(1//2=>1, 0=>1);
     P = SU2Space(1//2=>1);
-    T = TensorMap(zeros, ComplexF64, P, V^4);
+    T = zeros(ComplexF64, P, V^4);
 
     mt = mapping_table(T)
     num_paras = num_free_parameters(T; _mapping_table=mt)
@@ -16,7 +16,7 @@ end
 @testset "spatial_operations.jl" for _ in 1:10
     V = SU2Space(1//2=>1, 0=>1)
     P = SU2Space(1//2=>1)
-    T = TensorMap(zeros, ComplexF64, P, V^6)
+    T = zeros(ComplexF64, P, V^6)
 
     permutations = [((1, ), (3, 4, 5, 6, 7, 2)), 
                     ((1, ), (4, 5, 6, 7, 2, 3)),

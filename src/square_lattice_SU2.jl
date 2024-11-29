@@ -2,7 +2,7 @@ function T_1_3_A1()
 
     V = SU2Space(1//2=>1, 0=>1)
     P = SU2Space(1//2=>1)
-    T = TensorMap(zeros, ComplexF64, P, V^4)
+    T = zeros(ComplexF64, P, V^4)
 
     # a projector to the subspace with (1//2 ⊕ 0 ⊕ 0 ⊕ 0 -> 1//2) (short-range RVB)
     P_nocc_1_3 = begin
@@ -29,7 +29,7 @@ function T_3_1_A1()
 
     V = SU2Space(1//2=>1, 0=>1)
     P = SU2Space(1//2=>1)
-    T = TensorMap(zeros, ComplexF64, P, V^4)
+    T = zeros(ComplexF64, P, V^4)
 
     # a projector to the subspace with (1//2 ⊕ 1//2 ⊕ 1//2 ⊕ 0 -> 1//2) (long-range RVB)
     P_nocc_3_1 = begin
