@@ -112,8 +112,8 @@ function long_range_RVB_energy(Tfull, A, TB, ψA; J2=0.5, use_symmetric_tensor=t
     Vψ = space(ψA, 1)
     VT = space(Tfull, 1)
 
-    vr0 = TensorMap(rand, ComplexF64, VT*VT*Vψ, Vψ)
-    vl0 = TensorMap(rand, ComplexF64, Vψ, VT*VT*Vψ)
+    vr0 = rand(ComplexF64, VT*VT*Vψ, Vψ)
+    vl0 = rand(ComplexF64, Vψ, VT*VT*Vψ)
 
     λr, Er = eigsolve(transfer_R, vr0, 1, :LM);
     λr = λr[1];

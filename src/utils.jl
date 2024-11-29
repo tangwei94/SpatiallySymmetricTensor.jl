@@ -9,7 +9,7 @@ function mpo_ovlp(A1, A2)
         return Tv
     end
 
-    v0 = TensorMap(rand, ComplexF64, V1, V2)
+    v0 = rand(ComplexF64, V1, V2)
     return eigsolve(mpo_transf, v0, 1, :LM)
 end
 
@@ -31,7 +31,7 @@ function mpo_hermicity(A)
         return Tv
     end
 
-    vaa = TensorMap(rand, ComplexF64, v_space, v_space)
+    vaa = rand(ComplexF64, v_space, v_space)
     vaā = Tensor(rand, ComplexF64, v_space*v_space)
 
     aa, _ = eigsolve(AA_transf, vaa, 1, :LM) 
@@ -55,7 +55,7 @@ function mpo_normality(A)
         return Tv
     end
     
-    v0 = TensorMap(rand, ComplexF64, v_space*v_space, v_space*v_space)
+    v0 = rand(ComplexF64, v_space*v_space, v_space*v_space)
 
     āaāa, _ = eigsolve(ĀAĀA_transf, v0, 1, :LM) 
     āaaā, _ = eigsolve(ĀAAĀ_transf, v0, 1, :LM) 
