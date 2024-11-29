@@ -1,4 +1,4 @@
-const MPOTensor{S} = AbstractTensorMap{S,2,2} where {S}
+const MPOTensor{T,S} = AbstractTensorMap{T,S,2,2} where {T,S}
 
 function mpo_ovlp(A1, A2)
     V1 = space(A1, 1)
