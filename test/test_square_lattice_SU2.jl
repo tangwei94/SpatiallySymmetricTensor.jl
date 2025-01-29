@@ -1,6 +1,6 @@
 @testset "test T_1_3_A1" begin
-    T1 = SpatiallySymmetricTensor.T_1_3_A1()
-    T2 = SpatiallySymmetricTensor.T_1_3_A1_from_plain()
+    T1 = SpatiallySymmetricTensors.T_1_3_A1()
+    T2 = SpatiallySymmetricTensors.T_1_3_A1_from_plain()
     _, ix = findmax(norm.(T1.data))
     λ = T1.data[ix] / T2.data[ix]
 
@@ -8,8 +8,8 @@
 end
 
 @testset "test T_3_1_A1" begin
-    T1 = SpatiallySymmetricTensor.T_3_1_A1()
-    T2 = SpatiallySymmetricTensor.T_3_1_A1_from_plain()
+    T1 = SpatiallySymmetricTensors.T_3_1_A1()
+    T2 = SpatiallySymmetricTensors.T_3_1_A1_from_plain()
     _, ix = findmax(norm.(T1.data))
     λ = T1.data[ix] / T2.data[ix]
 
@@ -17,7 +17,7 @@ end
 end
 
 @testset "spin exchange" begin 
-    Sleft, Sright = SpatiallySymmetricTensor.spin_exchange()
+    Sleft, Sright = SpatiallySymmetricTensors.spin_exchange()
     @tensor SdotS[-1 -2; -3 -4] := Sleft[-1; -3 1] * Sright[1 -2; -4]
     SdotS_arr1 = reshape(convert(Array, SdotS), (4, 4))
 

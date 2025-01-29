@@ -1,9 +1,11 @@
-# SpatiallySymmetricTensor
+# SpatiallySymmetricTensors
 
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://tangwei94.github.io/SpatiallySymmetricTensor.jl/stable/)
-[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://tangwei94.github.io/SpatiallySymmetricTensor.jl/dev/)
-[![Build Status](https://github.com/tangwei94/SpatiallySymmetricTensor.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/tangwei94/SpatiallySymmetricTensor.jl/actions/workflows/CI.yml?query=branch%3Amain)
-[![Coverage](https://codecov.io/gh/tangwei94/SpatiallySymmetricTensor.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/tangwei94/SpatiallySymmetricTensor.jl)
+<!---
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://tangwei94.github.io/SpatiallySymmetricTensors.jl/stable/)
+[![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://tangwei94.github.io/SpatiallySymmetricTensors.jl/dev/)
+-->
+[![Build Status](https://github.com/tangwei94/SpatiallySymmetricTensors.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/tangwei94/SpatiallySymmetricTensors.jl/actions/workflows/CI.yml?query=branch%3Amain)
+[![Coverage](https://codecov.io/gh/tangwei94/SpatiallySymmetricTensors.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/tangwei94/SpatiallySymmetricTensors.jl)
 
 This package aims to provide a simple way to combine point group symmetries (e.g., C4v, C3v) with internal symmetries (e.g., SU(2), U(1)) within the framework of [TensorKit.jl](https://github.com/Jutho/TensorKit.jl). 
 
@@ -13,7 +15,7 @@ The internal SU(2) symmetry will be handled by TensorKit.jl, while the spatial s
 
 ```julia 
 using TensorKit
-using SpatiallySymmetricTensor 
+using SpatiallySymmetricTensors 
 ```
 
 We first specify the physical/virtual space for the PEPS tensor

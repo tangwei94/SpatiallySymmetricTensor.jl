@@ -1,16 +1,16 @@
-using SpatiallySymmetricTensor
+using SpatiallySymmetricTensors
 using Documenter
 
-DocMeta.setdocmeta!(SpatiallySymmetricTensor, :DocTestSetup, :(using SpatiallySymmetricTensor); recursive=true)
+DocMeta.setdocmeta!(SpatiallySymmetricTensors, :DocTestSetup, :(using SpatiallySymmetricTensors); recursive=true)
 
 makedocs(;
-    modules=[SpatiallySymmetricTensor],
+    modules=[SpatiallySymmetricTensors],
     authors="Wei Tang <tangwei@smail.nju.edu.cn> and contributors",
-    repo="https://github.com/tangwei94/SpatiallySymmetricTensor.jl/blob/{commit}{path}#{line}",
-    sitename="SpatiallySymmetricTensor.jl",
+    repo="https://github.com/tangwei94/SpatiallySymmetricTensors.jl/blob/{commit}{path}#{line}",
+    sitename="SpatiallySymmetricTensors.jl",
     format=Documenter.HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://tangwei94.github.io/SpatiallySymmetricTensor.jl",
+        canonical="https://tangwei94.github.io/SpatiallySymmetricTensors.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -20,6 +20,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/tangwei94/SpatiallySymmetricTensor.jl",
+    repo="github.com/tangwei94/SpatiallySymmetricTensors.jl",
     devbranch="main",
 )

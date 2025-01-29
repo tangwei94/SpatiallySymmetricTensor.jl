@@ -1,4 +1,4 @@
-module SpatiallySymmetricTensor
+module SpatiallySymmetricTensors
 
 __precompile__(true)
 

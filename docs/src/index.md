@@ -1,14 +1,14 @@
 ```@meta
-CurrentModule = SpatiallySymmetricTensor
+CurrentModule = SpatiallySymmetricTensors
 ```
 
-# SpatiallySymmetricTensor
+# SpatiallySymmetricTensors
 
-Documentation for [SpatiallySymmetricTensor](https://github.com/tangwei94/SpatiallySymmetricTensor.jl).
+Documentation for [SpatiallySymmetricTensors](https://github.com/tangwei94/SpatiallySymmetricTensors.jl).
 
 ```@index
 ```
 
 ```@autodocs
-Modules = [SpatiallySymmetricTensor]
+Modules = [SpatiallySymmetricTensors]
 ```
